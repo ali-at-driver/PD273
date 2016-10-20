@@ -10,3 +10,4 @@ PD273
 .bash_logout
 .bash_history
 .python_history
+*.pyc
