@@ -1,4 +1,4 @@
-from config import Adapters, report_field
+from config import Adapters
 from contextlib import contextmanager
 from cStringIO import StringIO
 from cutadapt.scripts import cutadapt
@@ -72,7 +72,7 @@ def get_adapter(infile, pre_adapter, read_num):
     return None
 
 
-def run(infile, outfile="/dev/null", params=None, lab_adapt_override=None):
+def run(infile, outfile="/dev/null", params=None, lab_adapt_override=None, stdout_override=True):
     if type(params) is str:
         params = params.split()
 
@@ -87,19 +87,24 @@ def run(infile, outfile="/dev/null", params=None, lab_adapt_override=None):
               '-o', outfile, datapath(infile)]
     # TODO parallelizable?
     # TODO: add infile2
-    with Capturing() as output:
-        cutadapt.main(params)
-        return output
-        
+    if stdout_override:
+        with Capturing() as output:
+            cutadapt.main(params)
+            return output
+    else:
+        return cutadapt.main(params)
 
 def run_paired(infile0, infile1, tmpfile=None, tmpfile1=None, params=None):
     # TODO: implement params AND param override 
     if type(params) is str:
         params = params.split()
 
-    output0 = run(infile0)    
+    output0 = run(infile0, stdout_override=False)    
     output1 = run(infile1)
-    return grep_report(output0, output1)
+    print(output0)
+    print(output1)
+    print("\n\n")
+    #return grep_report(output0, output1)
 
 
 def grep_report(report0, report1=None):

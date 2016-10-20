@@ -1,6 +1,8 @@
 #PUT ADAPTERS HERE FOR OTHER MODULES 
 
-report_field='Reads with adapters:'
+class Reports:
+    trim_field = 'Reads with adapters:'
+    dimer_field = 'Reads with adapters:'
 
 class Adapters:
     lab0 = "AATGATACGGCGACCACCGAGATCTACACXXXXXXXXACACTCTTTCCCTACACGACGCTCTTCCGATCT"
