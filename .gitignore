@@ -12,3 +12,4 @@ data
 .bash_history
 .python_history
 *.pyc
+*.py\~
