@@ -111,6 +111,3 @@ def grep_report(report0, report1=None):
 
     return found0[0].strip()
     
-
-if __name__=='__main__':
-    print(run_paired("R1.fastq.gz", "R2.fastq.gz"))

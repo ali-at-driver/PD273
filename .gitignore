@@ -1,6 +1,7 @@
 deprecated
 venv
 PD273
+data
 *fastq*
 .ssh
 .cache
