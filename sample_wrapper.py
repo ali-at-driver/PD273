@@ -1,6 +1,19 @@
 from multiprocessing import Process, Queue
 import argparse
 import sys
+import glob
+print glob.glob("/home/adam/*.txt")
+
+from os import walk
+
+def enqueue_paired_reads(path):
+    f = []
+    for (_, _, filenames) in walk(path):
+        f.extend(filenames)
+        break
+
+def process_queue(queue):
+    pass
 
 def Worker(Process):
     # param override
@@ -9,7 +22,7 @@ def Worker(Process):
         self.infile1 = inf1
         self.queue = queue
         self.results = results
-
+    
 
 class Writer(Process):
     def __init__(self, queue=None, trimmed=None, outfile=None):
@@ -29,3 +42,4 @@ class Writer(Process):
                     kept += 1
                 reads = get_func()
         self.trimmed.put(kept)
+

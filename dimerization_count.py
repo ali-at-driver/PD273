@@ -6,7 +6,8 @@ BELOW ARE PLACEHOLDERS TO BE ALTERED
 import argparse
 import cutadapt_wrapper
 from config import Reports
-
+import enqueue_files
+import multiprocessing
 
 def grep_report(report0, report1=None):    
     """
@@ -31,13 +32,18 @@ def grep_report_helper(report):
     return final_report
 
 
-def output_log():
-    print("port report to log")
+def mp_worker((file1, file2)):
+    output0, output1 = cutadapt_wrapper.run_paired(file1, file2)
+    grep_report(output0, output1)
 
 
-def process_dir():
-    print("do Pool and call to sample wrapper here")
+def mp_handler(data):
+    p = multiprocessing.Pool(2)
+    p.map(mp_worker, data)
+
 
 if __name__=='__main__':
-    outputs = cutadapt_wrapper.run_paired("data/R1.fastq.gz", "data/R2.fastq.gz")
-    grep_report(outputs[0], outputs[1])
+    #outputs = cutadapt_wrapper.run_paired("data/R1.fastq.gz", "data/R2.fastq.gz")
+    #grep_report(outputs[0], outputs[1])
+    data = enqueue_files.pair_files('./data')
+    mp_handler(data)
