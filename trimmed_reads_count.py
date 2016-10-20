@@ -1,3 +1,6 @@
+"""
+PD-274: Count number of reads with some adapter sequence identified/removed
+"""
 from multiprocessing import Process, Queue
 import argparse
 import sys
