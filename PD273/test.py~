@@ -1,0 +1,27 @@
+import subprocess
+
+import sys
+from multiprocessing import Process, Queue
+
+
+def run_example():
+    p1 = subprocess.Popen(["zcat", "R1.fastq.gz"], stdout=subprocess.PIPE)
+    p2 = subprocess.Popen(["head", "-n", "4"], stdin=p1.stdout, stdout=subprocess.PIPE)
+    p3 = subprocess.Popen(["cutadapt", "-a", adapter, "-o", "/dev/null", "-"], stdin=p2.stdout)
+
+class Worker(Process):
+    def __init__(self, threadID, fname):
+        super(Worker, self).__init__()
+        self.threadID = threadID
+        self.fname = fname
+
+    def run(self):
+        print("Starting" + str(self.fname) + "\n")
+        print("exiting")
+
+thread = Worker(threadID=1, fname="thread 1")
+
+thread.start()
+
+        
+        
