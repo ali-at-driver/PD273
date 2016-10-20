@@ -2,7 +2,7 @@
 
 class Reports:
     trim_field = 'Reads with adapters:'
-    dimer_field = 'Reads with adapters:'
+    dimer_field = 'Overview of removed sequences'
 
 class Adapters:
     lab0 = "AATGATACGGCGACCACCGAGATCTACACXXXXXXXXACACTCTTTCCCTACACGACGCTCTTCCGATCT"

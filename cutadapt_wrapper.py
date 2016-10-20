@@ -94,25 +94,17 @@ def run(infile, outfile="/dev/null", params=None, lab_adapt_override=None, stdou
     else:
         return cutadapt.main(params)
 
-def run_paired(infile0, infile1, tmpfile=None, tmpfile1=None, params=None):
+def run_paired(infile0, infile1, tmpfile=None, tmpfile1=None, params=None, stdout=True):
     # TODO: implement params AND param override 
     if type(params) is str:
         params = params.split()
 
-    output0 = run(infile0, stdout_override=False)    
-    output1 = run(infile1)
-    print(output0)
-    print(output1)
-    print("\n\n")
-    #return grep_report(output0, output1)
+    output0 = run(infile0, stdout_override=stdout)
+    output1 = run(infile1, stdout_override=stdout)
+    #print(output0)
+    #print(output1)
+    #print("\n\n")
+    
+    return (output0, output1)
 
-
-def grep_report(report0, report1=None):
-    found0 = filter(lambda x: 'Reads with adapters:' in x, report0)  # FIXME
-    if report1:
-        found1 = filter(lambda x: 'Reads with adapters:' in x, report1)  # FIXME
-        # TODO: add filename? do this in run_paired 
-        return "R1 report: " + found0[0].strip()[20:] + "\tR2 report: " + found1[0].strip()[20:]  # FIXME THIS IS TERRIBLE
-
-    return found0[0].strip()
     
